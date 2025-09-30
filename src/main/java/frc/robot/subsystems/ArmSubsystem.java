@@ -37,7 +37,7 @@ public class ArmSubsystem extends SubsystemBase {
   private SmartMotorControllerConfig smcConfig = new SmartMotorControllerConfig(this)
   .withControlMode(ControlMode.CLOSED_LOOP)
   // Feedback Constants (PID Constants)
-  .withClosedLoopController(50, 0, 0, DegreesPerSecond.of(90), DegreesPerSecondPerSecond.of(45))
+  .withClosedLoopController(50, 0, 0, DegreesPerSecond.of(150), DegreesPerSecondPerSecond.of(105))
   .withSimClosedLoopController(50, 0, 0, DegreesPerSecond.of(90), DegreesPerSecondPerSecond.of(45))
   // Feedforward Constants
   .withFeedforward(new ArmFeedforward(0, 0, 0))
@@ -61,13 +61,12 @@ public class ArmSubsystem extends SubsystemBase {
   private SmartMotorController sparkSmartMotorController = new SparkWrapper(spark, DCMotor.getNeo550(1), smcConfig);
 
   private ArmConfig armCfg = new ArmConfig(sparkSmartMotorController)
-  .withStartingPosition(Degrees.of(0))
   // Soft limit is applied to the SmartMotorControllers PID
   .withSoftLimits(Degrees.of(-20), Degrees.of(90))
   // Hard limit is applied to the simulation.
   .withHardLimit(Degrees.of(-30), Degrees.of(40))
   // Starting position is where your arm starts
-  .withStartingPosition(Degrees.of(-5))
+  .withStartingPosition(Degrees.of(0))
   // Length and mass of your arm for sim.
   .withLength(Feet.of(2))
   .withMass(Pounds.of(15))
